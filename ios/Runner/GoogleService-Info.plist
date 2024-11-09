@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>309813168460-djk4rfvql5cgak78rrrr490i3k7j595m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.309813168460-djk4rfvql5cgak78rrrr490i3k7j595m</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>309813168460-ri1loghof283g2ebr5c0eooggs1b0eud.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCTKDPfiuGMR1I7os0fSfLZR4RVDz84nPc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>309813168460</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.saynaApp</string>
+	<key>PROJECT_ID</key>
+	<string>sayna-18d2e</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sayna-18d2e.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:309813168460:ios:702d3c6e53825f267827e9</string>
+</dict>
+</plist>

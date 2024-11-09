@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "309813168460",
+    "project_id": "sayna-18d2e",
+    "storage_bucket": "sayna-18d2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309813168460:android:dfd5780633ea95397827e9",
+        "android_client_info": {
+          "package_name": "com.example.sayna_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309813168460-ri1loghof283g2ebr5c0eooggs1b0eud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sayna_app",
+            "certificate_hash": "676834ade75ee70fb00fc4e7fa6f02005a008485"
+          }
+        },
+        {
+          "client_id": "309813168460-01er0rldpdhr10lho8odongtfnlc9dfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcKzXx2LT0N2InL7P-p4jb57EIpymwZWw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309813168460-01er0rldpdhr10lho8odongtfnlc9dfr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "309813168460-djk4rfvql5cgak78rrrr490i3k7j595m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.saynaApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

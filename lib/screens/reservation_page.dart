@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ReservationPage extends StatefulWidget {
   final String professionelId;
@@ -234,6 +235,8 @@ class _ReservationPageState extends State<ReservationPage> {
                 // champ téléphone
                 TextFormField(
                   controller: _phoneClientController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],//prendre que des chiffres
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Entrer votre numéro de téléphone";

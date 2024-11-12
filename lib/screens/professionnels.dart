@@ -17,12 +17,12 @@ class ListProfessionnels extends StatefulWidget {
 class _ListProfessionnelsState extends State<ListProfessionnels> {
   bool isSearching = false;
   String searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: isSearching
+        title: isSearching
             ? TextField(
                 decoration: const InputDecoration(
                   hintText: 'Rechercher...',
@@ -34,37 +34,40 @@ class _ListProfessionnelsState extends State<ListProfessionnels> {
                   });
                 },
               )
-              :
-              Text(widget.categoryTitle,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
-        
+            : Text(
+                widget.categoryTitle,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
         actions: [
-          // bouton de recherche
-              IconButton(
-            icon: Icon(isSearching ? Icons.close : Icons.search,
-            size:28, color:Colors.white),
+          IconButton(
+            icon: Icon(
+              isSearching ? Icons.close : Icons.search,
+              size: 28,
+              color: Colors.white,
+            ),
             onPressed: () {
               setState(() {
                 isSearching = !isSearching;
-                if (!isSearching) searchQuery = ''; // Réinitialise la recherche
+                if (!isSearching) searchQuery = '';
               });
             },
           ),
         ],
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              size: 28, color: Colors.white), // Icône de retour
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 28,
+            color: Colors.white,
+          ),
           onPressed: () {
-            Navigator.pop(context); // Retour à la page précédente
+            Navigator.pop(context);
           },
         ),
-        backgroundColor: const Color(0xFF279BCD),// couleur app Bar
+        backgroundColor: const Color(0xFF279BCD),
       ),
-      // body
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('professionels')
@@ -76,153 +79,136 @@ class _ListProfessionnelsState extends State<ListProfessionnels> {
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
-                child:
-                    Text('Aucun professionnel trouvé pour cette catégorie.'));
+              child: Text('Aucun professionnel trouvé pour cette catégorie.'),
+            );
           }
-          // filter les professionnels par prenom et nom puis retourner la requete
+
+          // Filter the list of professionals
           final professionels = snapshot.data!.docs.where((professionel) {
-            final name = '${professionel['prenom']} ${professionel['nom']}';
-            return name.toLowerCase().contains(searchQuery);
+            final name =
+                '${professionel['prenom']} ${professionel['nom']}'.toLowerCase();
+            return name.contains(searchQuery);
           }).toList();
-          //final uniqueProfessionels = {for (var p in professionels) p['id']: p}.values.toList();
 
           return ListView.builder(
             itemCount: professionels.length,
             itemBuilder: (context, index) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: professionels.map((professionel) {
-                      final professionelId = professionel.id;
-                      final prenom = professionel['prenom'];
-                      final nom = professionel['nom'];
+              final professionel = professionels[index];
+              final professionelId = professionel.id;
+              final prenom = professionel['prenom'];
+              final nom = professionel['nom'];
+              final rating = professionel['note']?.toDouble() ?? 0.0;
 
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: Card(
-                          color:Colors.white,
-                          elevation: 2.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: SizedBox(
-                            height: 150.0,
-                            width: double
-                                .infinity, // Prend toute la largeur de l'écran
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5.0,
-                                  bottom: 5.0,
-                                  left: 10.0,
-                                  right: 10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '$prenom',
-                                        style: const TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-                                      // note des professionnels
-                                      RatingBar.builder(
-                                        initialRating:
-                                            professionel['note']?.toDouble() ??
-                                                0.0,
-                                        minRating: 1,
-                                        direction: Axis.horizontal,
-                                        allowHalfRating: true,
-                                        itemCount: 5,
-                                        itemSize: 25,
-                                        itemPadding: EdgeInsets.symmetric(
-                                            horizontal: 1.0),
-                                        itemBuilder: (context, _) => const Icon(
-                                          Icons.star,
-                                          color: Color(0xFFF29D38),
-                                        ),
-                                        onRatingUpdate: (newRating) {
-                                          // Mettre à jour la note dans Firestore
-                                          FirebaseFirestore.instance
-                                              .collection('professionels')
-                                              .doc(professionelId)
-                                              .update({'note': newRating});
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    '$nom',
-                                    style: const TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8.0),
-                                  Text(
-                                    widget.categoryTitle,
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children:[
-                                      // bouton réserver
-                                     ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                           context,
-                                           MaterialPageRoute(
-                                             builder:(context) =>ReservationPage(professionelId:professionelId,
-                                             prenom:prenom, nom:nom,categorie: widget.categoryTitle,
-                                             ),
-                                           )
-                                         );
-                                      },
-                                      style: const ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                            Color(0xFF279BCD)),
-                                      ),
-                                      child:const Text('Réserver',
-                                      style: TextStyle(color:Colors.white,
-                                      fontSize:20))
-                                      ),
-                                     GestureDetector(
-                                       onTap:(){
-                                         Navigator.push(
-                                           context,
-                                           MaterialPageRoute(
-                                             builder:(context) =>AvisClient(professionelId:professionelId,
-                                             
-                                             ),
-                                           )
-                                         );
-                                       },
-                                        child: const Text('Avis client',
-                                        style: TextStyle(
-                                          fontSize:20,
-                                          fontWeight:FontWeight.bold,
-                                        )),
-                                     ),
-                                    ]
-                                  ),
-                                ],
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+                child: Card(
+                  color: Colors.white,
+                  elevation: 2.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              prenom,
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            RatingBar.builder(
+                              initialRating: rating,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 25,
+                              itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Color(0xFFF29D38),
+                              ),
+                              onRatingUpdate: (newRating) {
+                                FirebaseFirestore.instance
+                                    .collection('professionels')
+                                    .doc(professionelId)
+                                    .update({'note': newRating});
+                              },
+                            ),
+                          ],
+                        ),
+                        Text(
+                          nom,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
-                    }).toList(),
+                        const SizedBox(height: 8.0),
+                        Text(
+                          widget.categoryTitle,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        SizedBox(height:5.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReservationPage(
+                                      professionelId: professionelId,
+                                      prenom: prenom,
+                                      nom: nom,
+                                      categorie: widget.categoryTitle,
+                                    ),
+                                  ),
+                                );
+                              },
+                              style: const ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                  Color(0xFF279BCD),
+                                ),
+                              ),
+                              child: const Text(
+                                'Réserver',
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AvisClient(
+                                      professionelId: professionelId,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'Avis client',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -230,7 +216,7 @@ class _ListProfessionnelsState extends State<ListProfessionnels> {
           );
         },
       ),
-      backgroundColor: const Color(0XFFF2F3F4),// couleur de la page/ couleur de la page // couleur arrière plan de la page
+      backgroundColor: const Color(0xFFF2F3F4),
     );
   }
 }

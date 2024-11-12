@@ -16,7 +16,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
     {"id":"1","title": "Plombier", "icon": Icons.plumbing},
     {"id":"2", "title": "Électricien", "icon": Icons.electrical_services},
     {"id":"3","title": "Jardinier", "icon": Icons.grass},
-    {"id":"4","title": "Ménage", "icon": Icons.cleaning_services},
+    {"id":"4","title": "Ménager", "icon": Icons.cleaning_services},
     {"id":"5","title": "Menuisier", "icon": Icons.handyman},
     {"id":"6","title": "Peintre", "icon": Icons.format_paint},
   ];
@@ -25,6 +25,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+        automaticallyImplyLeading: false, // Supprime le bouton de retour
         title:  Row(
          // mainAxisAlignment:MainAxisAlignment.spaceBetween,
           children: [

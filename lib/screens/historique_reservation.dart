@@ -21,6 +21,7 @@ class ReservationScreen extends StatelessWidget {
   }
     return Scaffold(
         appBar: AppBar(
+        automaticallyImplyLeading: false, // Supprime le bouton de retour
         title: const Center(
              child: Text("Mes réservations",
               style: TextStyle(

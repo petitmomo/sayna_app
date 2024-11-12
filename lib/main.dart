@@ -8,6 +8,7 @@ import 'screens/edite_profile.dart';
 import 'screens/historique_reservation.dart';
 import 'screens/login.dart';
 import 'screens/profile.dart';
+import 'screens/reset_password.dart';
 import 'screens/signUp.dart';
 
 Future <void> main() async {
@@ -49,6 +50,8 @@ class _MyAppState extends State<MyApp> {
           '/accueil': (context) => const  AccueilScreen(),
           '/main': (context) =>  const MainScreen(),
           '/edit_profile': (context) =>  const EditProfile(),
+          '/reset_password': (context) => const ResetPasswordScreen(),
+
       }
     );
   }
@@ -80,35 +83,34 @@ class _MainScreenState extends State<MainScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // Utiliser IndexedStack pour conserver l'état des pages et éviter le rechargement
-      body:IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Accueil',
+    return Column(
+      children: [
+        Expanded(
+          child: IndexedStack(
+            index: _selectedIndex,
+            children: _pages,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Réservation',
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.notifications),
-          //   label: 'Notifications',
-          // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blueAccent,
-        onTap: _onItemTapped,
-      ),
+        ),
+        BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Accueil',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'Réservation',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profil',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blueAccent,
+          onTap: _onItemTapped,
+        ),
+      ],
     );
     
   }

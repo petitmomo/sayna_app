@@ -127,13 +127,11 @@ class _ReservationPageState extends State<ReservationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text('Réserver ${widget.prenom} ${widget.nom}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
+        title: Text('Réserver ${widget.prenom} ${widget.nom}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
 
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,

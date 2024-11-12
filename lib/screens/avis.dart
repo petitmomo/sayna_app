@@ -14,13 +14,11 @@ class AvisClient extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        title: const Center(
-          child: Text('Avis des clients',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
+        title: const Text('Avis des clients',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
        
         leading: IconButton(
           icon: const Icon(Icons.arrow_back,

@@ -11,8 +11,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
    final TextEditingController _prenomController = TextEditingController();
-   final TextEditingController _adresseController = TextEditingController();
-   final TextEditingController _phoneController = TextEditingController();
    final TextEditingController _nomController = TextEditingController();
    final TextEditingController _emailController = TextEditingController();
    final _formKey = GlobalKey<FormState>();
@@ -41,8 +39,6 @@ class _EditProfileState extends State<EditProfile> {
             _prenomController.text = userDoc['prenom'] ?? '';
             _nomController.text = userDoc['nom'] ?? '';
             _emailController.text = userDoc['email'] ?? '';
-            _adresseController.text = userDoc['adresse'] ?? '';
-            _phoneController.text = userDoc['phone'] ?? '';
             
           });
         }
@@ -61,8 +57,6 @@ class _EditProfileState extends State<EditProfile> {
           await _firestore.collection('users').doc(user.uid).update({
             'prenom': _prenomController.text,
             'nom': _nomController.text,
-            'adresse': _adresseController.text,
-            'phone': _phoneController.text,
             'email': _emailController.text,
           });
           ScaffoldMessenger.of(context).showSnackBar(
@@ -81,14 +75,12 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-              appBar: AppBar(
-        title: const Center(
-             child: Text("Modifier le profile",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              )),
-        ),
+        appBar: AppBar(
+        title: const Text("Modifier le profile",
+         style: TextStyle(
+           color: Colors.white,
+           fontWeight: FontWeight.bold,
+         )),
           leading: IconButton(
           icon: const Icon(Icons.arrow_back,
               size: 28, color: Colors.white), // Icône de retour
@@ -157,60 +149,7 @@ class _EditProfileState extends State<EditProfile> {
                     labelText: "Nom",
                   ),
                 ),
-              const SizedBox(height: 10.0),
-              // champ adresse
-                  TextFormField(
-                  controller: _adresseController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Entrer votre adresse";
-                    }
-            
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.map_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xFFF29D38), width: 1.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                        color: Color(0xFF279BCD), width: 1.0)),
-                    labelText: "Adresse",
-                  ),
-                ),
-                // champ téléphone
-                const SizedBox(height: 10.0),
-                  TextFormField(
-                  controller: _phoneController,
-                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Entrer votre numéro de téléphone";
-                    }
-            
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.phone_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xFFF29D38), width: 1.0)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: const BorderSide(
-                        color: Color(0xFF279BCD), width: 1.0)),
-                    labelText: "Numéro de téléphone",
-                  ),
-                ),
+             
                 const SizedBox(height: 10.0),// espace de 10
                 // champ email
                   TextFormField(
@@ -242,14 +181,13 @@ class _EditProfileState extends State<EditProfile> {
               ElevatedButton(
                 onPressed: () {
                   _saveProfile();
-                  
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF279BCD),
                 ),
                 child: const Text(
                   'Enregistrer les modifications',
-                  style: TextStyle(fontSize: 18,color:Colors.white),
+                  style: TextStyle(fontSize: 18,color:Colors.white,fontWeight:FontWeight.bold),
                 ),
               ),
             ],

@@ -111,6 +111,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
+                    // mot de passe oublié
+                    Padding(
+                      padding: const EdgeInsets.only(right:15.0),
+                      child: GestureDetector(
+                        onTap:(){
+                          Navigator.pushNamed(context, '/reset_password');                        },
+                          child: const Row(
+                          mainAxisAlignment:MainAxisAlignment.end,
+                          children: [
+                            Text('Mot de passe oublié'),
+                          ],
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                       //Button de connexion

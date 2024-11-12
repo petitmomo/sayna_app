@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sayna_app/auth/firebase_auth_services.dart';
-//import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,20 +18,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> signOut() async {
     await _authService.signOut();
   }
-  //     // Fonction pour partager l'application
-  // void _shareApp() {
-  //   final String message = 'Découvrez cette application incroyable ! Téléchargez-la ici : $appLink';
-
-  //   Share.share(
-  //     message,
-  //     subject: 'Partager l’application',
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+        automaticallyImplyLeading: false, // Supprime le bouton de retour
         title: const Center(
              child: Text("Profile",
               style: TextStyle(
@@ -78,40 +69,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
-               // const SizedBox(height:10.0),
-                // section partage
-                  
-                // Container(
-                //   height:50.0,
-                //   decoration:BoxDecoration(
-                //     color:Colors.white,
-                //     borderRadius:BorderRadius.circular(60.0),
-                //   ),
-                //   child: GestureDetector(
-                //     onTap: () {
-                //      // _shareApp();
-                //     },
-                //     child: const Padding(
-                //       padding: EdgeInsets.all(8.0),
-                //       child: Row(
-                //         children: [
-                //           Icon(Icons.share, size: 30, color:Color(0xFFF29D38)),
-                //           SizedBox(width: 10.0),
-                //           Text(
-                //             'Partager',
-                //             style: TextStyle(
-                //               fontSize: 20.0,
-                //               fontWeight: FontWeight.bold,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
+               
                 const SizedBox(height:10.0),
                  // Section de déconnexion
-               
                 Container(
                   height:50.0,
                   decoration:BoxDecoration(
@@ -127,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.person, size: 30, color:Color(0xFFF29D38)),
+                          Icon(Icons.logout, size: 30, color:Color(0xFFF29D38)),
                           SizedBox(width: 10.0),
                           Text(
                             'Se déconnecter',
